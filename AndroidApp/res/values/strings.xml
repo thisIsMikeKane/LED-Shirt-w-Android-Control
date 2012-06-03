@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="hello">Hello World, LEDControllerActivity!</string>
+    <string name="app_name">LED Controller</string>
+    <string name="tag">LedCtrlr</string>
+    
+    <!--  BluetoothChat -->
+    <string name="send">Send</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="title_connecting">Connecting...</string>
+    <string name="title_connected_to">Connected to <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="title_not_connected">You are not connected to a device</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+
+    <!-- Options Menu -->
+    <string name="connect">Connect a device</string>
+    
+    <!--  Color Picker Dialog -->
+    <string name="settings_bg_color_confirm">Tap here to confirm</string>
+    <string name="settings_default_color_confirm">Default color</string>
+    <string name="settings_bg_color_dialog">Pick a color</string>
+    
+    <!-- SET_ALL_RGB Activity -->
+    <string name="set_all_rgb">Set All</string>
+    
+    <!--  ANI_RAINBOW_ACTIVITY  -->
+    <string name="ani_rainbow">Rainbow Animation</string>
+    
+    <!--  ANI_DOTS_Activity  -->
+    <string name="ani_dots">Dots Animation</string>
+</resources>

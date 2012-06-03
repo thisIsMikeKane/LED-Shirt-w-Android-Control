@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="LedDriver" />
+		<Option pch_mode="2" />
+		<Option compiler="iccavr" />
+		<Build>
+			<Target title="default">
+				<Option output="Output\LedDriver" prefix_auto="0" extension_auto="0" />
+				<Option object_output="Output" />
+				<Option type="1" />
+				<Option compiler="iccavr" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-e" />
+			<Add option="-DATMega128" />
+			<Add option="-l" />
+			<Add option="-v" />
+			<Add option="-A" />
+			<Add option="-g" />
+			<Add option="-MLongJump" />
+			<Add option="-MHasMul" />
+			<Add option="-MEnhanced" />
+			<Add option="-Wf-use_elpm" />
+			<Add option="-D__BUILD=668" />
+			<Add option="-D__ICC_VERSION=80300" />
+		</Compiler>
+		<Linker>
+			<Add option="-g" />
+			<Add option="-e:0x20000" />
+			<Add option="-ucrtatmega.o" />
+			<Add option="-bfunc_lit:0x8c.0x10000" />
+			<Add option="-dram_end:0x10ff" />
+			<Add option="-bdata:0x100.0x10ff" />
+			<Add option="-dhwstk_size:30" />
+			<Add option="-beeprom:0.4096" />
+			<Add option="-fihx_coff" />
+			<Add option="-S2" />
+			<Add option="-nb:668" />
+			<Add library="catm128" />
+		</Linker>
+		<Unit filename="Animations.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Animations.h" />
+		<Unit filename="Initialize.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Initialize.h" />
+		<Unit filename="Interrupt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LED.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LED.h" />
+		<Unit filename="Serial.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Serial.h" />
+		<Unit filename="definitions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="definitions.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="spi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="spi.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

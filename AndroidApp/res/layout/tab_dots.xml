@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="wrap_content">
+
+	<LinearLayout android:id="@+id/tableRow1"
+		android:layout_width="match_parent" android:layout_height="wrap_content">
+
+		<CheckBox android:text="Random Color" android:id="@+id/tab_dots_check_rand"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+		</CheckBox>
+
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:gravity="bottom" android:paddingRight="2dp" android:paddingLeft="10dp">
+
+			<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content" android:text="Birthrate"
+				android:layout_height="wrap_content" android:id="@+id/textView2">
+			</TextView>
+
+			<SeekBar android:layout_height="wrap_content"
+				android:gravity="right" android:layout_width="match_parent"
+				android:id="@+id/tab_dots_seek_brithrate"
+				android:max="3000"
+				android:progress="1200">
+			</SeekBar>
+
+		</LinearLayout>
+
+	</LinearLayout>
+	
+	<View android:layout_height="5dip" android:background="#FF000000" />
+	<View android:layout_height="2dip" android:background="#FF909090" />
+	<View android:layout_height="5dip" android:background="#FF000000" />
+
+	<LinearLayout android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal">
+
+		<RelativeLayout android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/ambilwarna_viewContainer"
+			android:paddingTop="@dimen/ambilwarna_spacer" android:paddingRight="@dimen/ambilwarna_spacer"
+			android:paddingBottom="@dimen/ambilwarna_spacer" android:paddingLeft="@dimen/ambilwarna_spacer"
+			android:clipToPadding="false" android:layout_gravity="center">
+
+			<yuku.ambilwarna.AmbilWarnaKotak
+				android:id="@+id/ambilwarna_viewSatBri" android:layout_width="175dp"
+				android:layout_height="175dp" />
+
+			<ImageView android:id="@+id/ambilwarna_viewHue"
+				android:layout_width="30dp" android:layout_height="175dp"
+				android:layout_toRightOf="@id/ambilwarna_viewSatBri"
+				android:layout_marginLeft="@dimen/ambilwarna_spacer" android:src="@drawable/ambilwarna_hue"
+				android:scaleType="fitXY" />
+
+			<ImageView android:id="@+id/ambilwarna_cursor"
+				android:layout_width="9dp" android:layout_height="9dp"
+				android:src="@drawable/ambilwarna_cursor" android:scaleType="matrix" />
+
+			<ImageView android:id="@+id/ambilwarna_target"
+				android:layout_width="15dp" android:layout_height="15dp"
+				android:src="@drawable/ambilwarna_target" android:scaleType="matrix" />
+
+			<LinearLayout android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/ambilwarna_state"
+				android:orientation="horizontal" android:layout_marginTop="@dimen/ambilwarna_spacer"
+				android:layout_below="@id/ambilwarna_viewSatBri" android:gravity="center"
+				android:layout_centerHorizontal="true">
+
+				<View android:layout_width="60dp" android:layout_height="30dp"
+					android:id="@+id/ambilwarna_warnaLama" android:background="#faa" />
+
+				<ImageView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:src="@drawable/ambilwarna_arrow_right"
+					android:paddingLeft="@dimen/ambilwarna_spacer"
+					android:paddingRight="@dimen/ambilwarna_spacer" />
+
+				<View android:layout_width="60dp" android:layout_height="30dp"
+					android:id="@+id/ambilwarna_warnaBaru" android:background="#aaf" />
+
+			</LinearLayout>
+
+		</RelativeLayout>
+
+		<LinearLayout android:layout_height="match_parent"
+			android:layout_width="match_parent" android:gravity="right"
+			android:orientation="vertical" android:paddingRight="10dp">
+
+			<LinearLayout android:gravity="center" android:layout_width="wrap_content"
+				android:orientation="vertical" android:layout_height="match_parent">
+			
+				<TextView android:layout_width="wrap_content" android:id="@+id/textView1"
+					android:layout_height="wrap_content" android:text="Length"
+					android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+	
+				<android.widget.VerticalSeekBar
+					android:layout_width="30dp" android:id="@+id/tab_dots_seek_lifespan"
+					android:layout_height="match_parent" android:paddingLeft="10dp"
+					android:paddingRight="10dp"
+					android:max="10"
+					android:progress="2">
+				</android.widget.VerticalSeekBar>			
+			
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</LinearLayout>
+	
+	<View android:layout_height="5dip" android:background="#FF000000" />
+	<View android:layout_height="2dip" android:background="#FF909090" />
+	<View android:layout_height="5dip" android:background="#FF000000" />
+
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:id="@+id/linearLayout1"
+		android:orientation="horizontal" android:gravity="center" 
+		android:paddingLeft="2dp" android:paddingRight="2dp">
+
+		<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content" android:text="Strobe Rate"
+			android:layout_height="wrap_content" android:id="@+id/textView3">
+		</TextView>
+
+		<SeekBar android:layout_weight="1" android:id="@+id/seekBar2"
+			android:layout_height="wrap_content" android:layout_width="match_parent"
+			android:paddingLeft="10dp" android:paddingRight="10dp">
+		</SeekBar>
+
+	</LinearLayout>
+
+	<LinearLayout android:layout_width="match_parent"
+		android:orientation="vertical" android:layout_height="match_parent"
+		android:gravity="bottom">
+
+		<Button android:id="@+id/tab_dots_but_set"
+			android:layout_height="wrap_content" android:text="Set Dots"
+			android:layout_width="match_parent"></Button>
+
+	</LinearLayout>
+	
+</TableLayout>

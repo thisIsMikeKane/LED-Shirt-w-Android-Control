@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:stretchColumns="1">
+
+	<LinearLayout android:id="@+id/linearLayout2"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+		<TextView android:id="@+id/textView1" android:text="# of Colors: "
+			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"></TextView>
+
+		<TextView android:id="@+id/textView3" android:text="(Larger = Slower)"
+			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall"
+			android:layout_width="wrap_content"></TextView>
+
+	</LinearLayout>
+
+	<SeekBar android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:id="@+id/tab_rb_seek_rate"
+		android:max="100" android:progress="75" android:layout_marginLeft="10dip" android:layout_marginRight="10dip"></SeekBar>
+
+	<View android:layout_height="5dip" android:background="#FF000000" />
+	<View android:layout_height="2dip" android:background="#FF909090" />
+	<View android:layout_height="5dip" android:background="#FF000000" />
+
+	<LinearLayout android:id="@+id/linearLayout2"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+		<TextView android:id="@+id/textView2" android:text="Brightness: "
+			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"></TextView>
+
+		<TextView android:id="@+id/textView4" android:text="(Larger = Brighter)"
+			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall"
+			android:layout_width="wrap_content"></TextView>
+
+	</LinearLayout>
+
+	<SeekBar android:layout_height="wrap_content" android:id="@+id/tab_rb_seek_brightness"
+		android:layout_width="match_parent" android:max="255"
+		android:progress="255" android:layout_marginRight="10dip" android:layout_marginLeft="10dip">
+	</SeekBar>
+
+	<View android:layout_height="5dip" android:background="#FF000000" />
+	<View android:layout_height="2dip" android:background="#FF909090" />
+	<View android:layout_height="5dip" android:background="#FF000000" />
+
+	<CheckBox android:text="Running rainbow" android:id="@+id/tab_rb_check_running"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false"></CheckBox>
+
+	<LinearLayout android:layout_height="wrap_content"
+		android:orientation="vertical" android:id="@+id/tab_rb_layout_speed"
+		android:layout_width="wrap_content">
+		
+		<TextView android:id="@+id/tab_rb_txt_speed" android:text="Running speed"
+			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"></TextView>	
+			
+		<SeekBar android:layout_height="wrap_content" android:id="@+id/tab_rb_seek_speed"
+			android:layout_width="match_parent" android:max="30"
+			android:progress="18" android:layout_marginRight="10dip" android:layout_marginLeft="10dip">
+		</SeekBar>			
+		
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/linearLayout1"
+		android:layout_width="match_parent" android:orientation="vertical"
+		android:layout_height="match_parent" android:gravity="bottom">
+
+		<Button android:id="@+id/tab_rb_but_set" android:layout_height="wrap_content"
+			android:layout_width="match_parent" android:text="Set Rainbow"></Button>
+	</LinearLayout>
+
+</TableLayout>
