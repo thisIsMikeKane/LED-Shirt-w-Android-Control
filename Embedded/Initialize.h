@@ -26,9 +26,10 @@
 #ifndef INITIALIZE_H_INCLUDED
 #define INITIALIZE_H_INCLUDED
 
+void InitializeClk(void);
 void InitializePorts(void);
 void InitializeSPI(void);
-void InitializeUART1(BYTE baudrate);
+void InitializeUART1(void);
 void Initialize_ExSRAM(void);
 
 #endif // INITIALIZE_H_INCLUDED

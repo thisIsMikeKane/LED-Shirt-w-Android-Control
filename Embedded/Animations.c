@@ -72,12 +72,12 @@ void Animate_Display_ISR(void)
 void Start_Animation(void)
 {
     /* Initialize Animation Interrupt
-    /* =============================
-    /* Timer3/CounterA.
-    /* CTC, Clear Timer on Compare Match Mode.
-    /* TOP value = OCR3A.
-    /* Prescaler = 1024, so clkT3 = 8MHz / 1024 = 7.813KHz = 128us
-    /* OCR3A = Each frame */
+     * =============================
+     * Timer3/CounterA.
+     * CTC, Clear Timer on Compare Match Mode.
+     * TOP value = OCR3A.
+     * Prescaler = 1024, so clkT3 = 8MHz / 1024 = 7.813KHz = 128us
+     * OCR3A = Each frame */
     TCCR3A  = 0;
     TCCR3B  = 0;
     TCNT3   = 0x0000;

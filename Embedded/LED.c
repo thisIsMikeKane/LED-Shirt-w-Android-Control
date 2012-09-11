@@ -50,7 +50,7 @@ void InitializeLED(void)
     delayTime(30000);
     delayTime(30000);
 
-    /* Set all pixes off */
+    /* Set all pixels off */
     clearDisplay();
 }
 

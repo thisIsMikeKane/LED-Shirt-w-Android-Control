@@ -25,20 +25,19 @@
 
 #include "definitions.h"
 
-/* Interrupt handles for serial transmissions */
-#pragma interrupt_handler  USART1_RX_IN:iv_USART1_RX
-
 /* Interrupt handlers for timer compare interrupts */
 #pragma interrupt_handler TIMER3_COMPA_INT:iv_TIMER3_COMPA
 
 /* Interrupt that fires when a byte is ready to be read in from UART */
-void USART1_RX_IN(void)
+#pragma vector=USCIAB0RX_VECTOR
+__interrupt void USCI0RX_ISR(void)
 {
     ReceiveFromSerial();
 }
 
-/* General interrupt handler for timer3, compA interrupt */
-void TIMER3_COMPA_INT(void)
+/* General interrupt handler for timerA, comp0 interrupt */
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void Timer_A (void)
 {
     Animate_Display_ISR();
     updateDisplay();

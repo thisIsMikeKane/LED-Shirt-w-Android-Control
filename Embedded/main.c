@@ -1,6 +1,6 @@
 /*
  *  main.c
- *  This project will link a ATMega128 with the BlueSMiRF Silve module and a string of i2c driven LEDs
+ *  This project will link a MSP430 with the BlueSMiRF Silver module and a string of i2c driven LEDs
  *
  * @author Mike Kane
  *     This file is part of LED-Shirt-w-Android-Control.
@@ -32,17 +32,20 @@ void main(void)
     uint16_t i;
     uint8_t j;
 
+    //Stop WDT
+    WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
+
 	/* Disable all interrupts */
 	Disable_GLOBAL_INT();
 
-	/* Initalize ports for communication peripherals */
+	/* Initialize ports for communication peripherals */
     InitializePorts();
 
 	/* Initialize SPI */
     InitializeSPI();
 
     /* Initialize serial port connection */
-    InitializeUART1(12); //Baud = 125000 ~= 115200 used by the BlueSMiRF (reprogrammed to 38.4k for less error)
+    InitializeUART1();
 
 	/* Initialize LED Display */
 	InitializeLED();

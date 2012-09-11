@@ -36,23 +36,8 @@ void SerialAcknowledge(void);
 
 void USART_Transmit(unsigned char data)
 {
-    /* Wait for empty transmit buffer */
-    while (!( UCSR1A & (1<<UDRE1)));
-
-    /* Put data into buffer, sends the data */
-    UDR1 = data;
-}
-
-/* Clears all bytes from USART1 */
-void USART_Flush(void)
-{
-    unsigned char dummy;
-
-    /* Reads values from USART1 RX Buffer until nothing is left */
-    while(UCSR1A & (1<<RXC1))
-    {
-        dummy = UDR1;
-    }
+	while (!(IFG2 & UCA0TXIFG));                 // USCI_A0 TX buffer ready?
+	UCA0TXBUF = data;
 }
 
 /* Transmits the bytes in the USART software FIFO */
@@ -71,7 +56,7 @@ unsigned char ReceiveFromUART1(void)
 {
     unsigned char returnbyte;
 
-	returnbyte = UDR1;
+	returnbyte = UCA0RXBUF;
 
 	return returnbyte;
 }
@@ -96,7 +81,7 @@ void SerialAcknowledge(void)
 void ReceiveFromSerial(void)
 {
     uint8_t server_cmd;
-    uint8_t SREG_ack, EIMSK_ack, UCSR1B_ack;
+    uint8_t GIE_was_true;
 
 //    UDR1 = UDR1;
 
@@ -105,11 +90,8 @@ void ReceiveFromSerial(void)
 //    Animate_Strobe(true, RGB_2_BYTES(15,0,15), 48);
 
 	/* Store Existing Interrupt State */
-    SREG_ack = SREG & (1 << 7);
+    GIE_was_true = SR & BIT(GIE);
 	Disable_GLOBAL_INT();
-    EIMSK_ack = EIMSK & (1 << INT0);
-    UCSR1B_ack = UCSR1B & (1 << RXCIE1);
-	DISABLE_UART1_RX_INT();
 
     /* Copy incoming USART bytes to FIFO */
 
@@ -122,10 +104,11 @@ void ReceiveFromSerial(void)
     /* If we haven't received an end of frame, return program functionality */
     if(USART_RX_Received < 12 || memcmp(&USART_RX_FIFO[USART_RX_Received-5]," !!! ",5))
     {
-        /* Enable interrupts */
-        SREG |= SREG_ack;
-        EIMSK |= EIMSK_ack;
-        UCSR1B |= UCSR1B_ack;
+        /* Enable interrupts if necessary */
+        if (GIE_was_true)
+        {
+        	Enable_GLOBAL_INT();
+        }
 
         return;
     }
@@ -135,10 +118,11 @@ void ReceiveFromSerial(void)
         USART_RX_Length = USART_RX_FIFO[USART_RX_Received-6];
         if(USART_RX_Length <= USART_RX_Received && memcmp(&USART_RX_FIFO[USART_RX_Received-USART_RX_Length]," >>> ",5))
         {
-            /* Enable interrupts */
-            SREG |= SREG_ack;
-            EIMSK |= EIMSK_ack;
-            UCSR1B |= UCSR1B_ack;
+        	/* Enable interrupts if necessary */
+			if (GIE_was_true)
+			{
+				Enable_GLOBAL_INT();
+			}
 
             return;
         }
@@ -147,10 +131,11 @@ void ReceiveFromSerial(void)
             /* Flush USART RX FIFO */
             USART_RX_Received = 0;
 
-            /* Enable interrupts */
-            SREG |= SREG_ack;
-            EIMSK |= EIMSK_ack;
-            UCSR1B |= UCSR1B_ack;
+        	/* Enable interrupts if necessary */
+			if (GIE_was_true)
+			{
+				Enable_GLOBAL_INT();
+			}
 
             return;
         }
@@ -232,8 +217,9 @@ void ReceiveFromSerial(void)
     /* Flush USART RX FIFO */
     USART_RX_Received = 0;
 
-	/* Enable interrupts */
-    SREG |= SREG_ack;
-    EIMSK |= EIMSK_ack;
-    UCSR1B |= UCSR1B_ack;
+	/* Enable interrupts if necessary */
+	if (GIE_was_true)
+	{
+		Enable_GLOBAL_INT();
+	}
 }

@@ -25,45 +25,58 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <iom128v.h>
+#include  <msp430g2553.h>
 #include "definitions.h"
+
+void InitializeClk(void)
+{
+	// Set MCU speed to 1MHz using internal digitally controlled oscillator (DCO)
+	BCSCTL1 = CALBC1_1MHZ;                    // Set DCO
+	DCOCTL = CALDCO_1MHZ;
+}
 
 void InitializePorts(void)
 {
     /* Special Function I/O register initialization */
-	/* Pullups in I/O ports are disabled */
-	/* Keeps I/0 pins safe from being changed randomly by pullups */
-	SFIOR |= BIT(PUD);
+	// See definitions.h for alignment
+	P1SEL  = BIT(RXD) | BIT(TXD) | BIT(CLK) | BIT(MOSI) | BIT(MISO);
+	P1SEL2 = BIT(RXD) | BIT(TXD) | BIT(CLK) | BIT(MOSI) | BIT(MISO);
 
-    /* Set MOSI, SCK, and SS output, all others input
-     * pin    2    1       0  of Port B.*/
-    DDRB = DDRB | BIT(MOSI) | BIT(SCK) | BIT(CSN);
+	P1DIR  = BIT(CSN) | BIT(LED1) | BIT(LED2);
 
-    /* Set Chip Select (CSN) line low */
-	PORTB = BIT(MOSI) | BIT(SCK) | BIT(CSN);
+	/* Pull-ups in I/O ports are disabled */
+	P1REN = 0;
+
+	/* Set Chip Select (CSN) line low */
+	P1OUT  &= ~BIT(CSN);
 }
 
 void InitializeSPI(void)
 {
-    /* Initialize SPI */
-	SPCR = (1<<SPE) | (1<<MSTR);
-	SPSR = BIT(SPI2X);
+    /* Initialize SPI on USCI-B */
+	// Master 4-wire synchronous mode
+	UCB0CTL0 = UCMST & UCMODE_1 & UCSYNC;
+	// Clock source from SMCLK
+	UCB0CTL1 = UCSSEL_2;
+	// Baud rate set at 1MHz assuming 1MHz MCU speed
+	UCB0BR0 = 0;
+	UCB0BR1 = 0;
+	// No modulation (Needed for SPI mode)
+	UCA0MCTL = 0;
+
+	// **Initialize USCI state machine**
+	UCA0CTL1 &= ~UCSWRST;
 }
 
-void InitializeUART1(BYTE baudrate)
+void InitializeUART1()
 {
-	/* Set baud rate */
-	UBRR1H = (BYTE)(baudrate>>8);
-	UBRR1L = (BYTE)baudrate;
-
-	/* u2x */
-	//UCSR1A = (1<<U2X1);
-
-    /* Eight bits per character */
-	//UCSR1C = 0x06;
-
-	/* Enable receiver and transmitter */
-//	UCSR1A = BIT(U2X1);
-	UCSR1B = BIT(RXEN1) | BIT(TXEN1);
-	UCSR1C = BIT(UCSZ10) | BIT(UCSZ11);
+	/* Initialize UART on USCI-A */
+	// Buad rate of 115200 used by the BlueSMiRF
+	UCA0CLT0  = 0;
+	UCA0CTL1  = UCSSEL_2;                  		// SMCLK
+	UCA0BR0   = 8;                              // 1MHz 115200
+	UCA0BR1   = 0;                              // 1MHz 115200
+	UCA0MCTL  = UCBRS2 + UCBRS0;               	// Modulation UCBRSx = 5
+	UCA0CTL1 &= ~UCSWRST;                     	// **Initialize USCI state machine**
+	IE2      |= UCA0RXIE;                       // Enable USCI_A0 RX interrupt
 }
