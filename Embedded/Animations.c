@@ -73,30 +73,20 @@ void Start_Animation(void)
 {
     /* Initialize Animation Interrupt
      * =============================
-     * Timer3/CounterA.
-     * CTC, Clear Timer on Compare Match Mode.
-     * TOP value = OCR3A.
-     * Prescaler = 1024, so clkT3 = 8MHz / 1024 = 7.813KHz = 128us
-     * OCR3A = Each frame */
-    TCCR3A  = 0;
-    TCCR3B  = 0;
-    TCNT3   = 0x0000;
-    ETIFR  |= BIT(OCF3A);
-
-//    OCR3A = 130; // 0.01664s per frame ~ 60 frames per second
-    OCR3A = 260; // ~30 frames per second
-
-    /* Start Timer */
-    ETIMSK |=  BIT(OCIE3A);
-    TCCR3B = BIT(WGM32) | BIT(CS32) | BIT(CS30);
+     * Frame refresh at 33.3 fps = 30000 us
+     * 	@ 1MHz clk = 30000 cycles
+     * Use Timer A comparator 0
+     */
+	CCTL0 = CCIE;                             	// CCR0 interrupt enabled
+	CCR0 = 30000;
+	TACTL = TASSEL_2 + MC_1;                  	// SMCLK, contmode
 }
 
 /** Stop the Animation ISR */
 void Stop_Animation(void)
 {
-    ETIMSK &= ~BIT(OCIE3A);
-    TCCR3A = 0;
-    TCCR3B = 0;
+    TACTL = MC_0;								// Halt timer
+    CCTL0 = 0;									// Disable interrupts
 }
 
 /** Strobe all the LEDs a single color on and off at a given rate

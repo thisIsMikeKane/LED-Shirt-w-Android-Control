@@ -25,7 +25,7 @@
 
 #include "definitions.h"
 
-extern uint16_t cValOfLED[100];
+extern uint16_t cValOfLED[];
 
 void main(void)
 {

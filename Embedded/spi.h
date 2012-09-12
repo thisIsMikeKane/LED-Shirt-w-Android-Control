@@ -29,48 +29,34 @@
 unsigned char SPI_MasterTransceive(unsigned char cData);
 
 /* Macros */
-#define ENABLE_SPI_STC_INT()    do { SPCR |= BM(SPIE); } while (0)
-#define DISABLE_SPI_STC_INT()   do { SPCR &= ~BM(SPIE); } while (0)
-
-#define SPI_Enable()   (PORTB &= ~BIT(CSN))
-#define SPI_Disable()   (PORTB |= BIT(CSN))
-#define SPI_Wait() while(!(SPSR & (1<<SPIF)))
+#define SPI_Enable()   	(P1OUT &= ~BIT(CSN))
+#define SPI_Disable()   (P1OUT |= BIT(CSN))
+#define SPI_Wait() 		while (!(IFG2 & UCB0TXIFG))
 
 #define SPI_TX(dbyte) \
-	SPDR = dbyte;\
+	UCB0TXBUF = dbyte;\
 	SPI_Wait();
-
-#define SPI_TX_Addr(addr)\
-	SPDR = addr;\
-	SPI_Wait();
-
-
-#define SPI_RX_Addr(addr) \
-	do{\
-	SPDR = (addr)|0x40;\
-	SPI_Wait();\
-	}while (0)
 
 #define SPI_RX(readbyte) \
 	do{\
-	SPDR = 0;\
+	UCB0TXBUF = 0;\
 	SPI_Wait();\
-	readbyte = SPDR;\
+	readbyte = UCB0RXBUF;\
 	}while (0)
 
 #define SPI_RX_WORD(readword) \
 	do {\
-	SPDR = 0;\
+	UCB0TXBUF = 0;\
 	SPI_Wait();\
-	readword = SPDR << 8;\
-	SPDR = 0;\
+	readword = UCB0RXBUF << 8;\
+	UCB0TXBUF = 0;\
 	SPI_Wait();\
-	readword |= SPDR;\
+	readword |= UCB0RXBUF;\
 	}while(0)
 
 #define SPI_RX_GARBAGE() \
 	do{\
-	SPDR = 0;\
+	UCB0TXBUF = 0;\
 	SPI_Wait();\
 	}while (0)
 

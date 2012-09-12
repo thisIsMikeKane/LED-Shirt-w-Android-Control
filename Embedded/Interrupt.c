@@ -25,9 +25,6 @@
 
 #include "definitions.h"
 
-/* Interrupt handlers for timer compare interrupts */
-#pragma interrupt_handler TIMER3_COMPA_INT:iv_TIMER3_COMPA
-
 /* Interrupt that fires when a byte is ready to be read in from UART */
 #pragma vector=USCIAB0RX_VECTOR
 __interrupt void USCI0RX_ISR(void)
@@ -39,6 +36,11 @@ __interrupt void USCI0RX_ISR(void)
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void Timer_A (void)
 {
+	LED1_TOG();
     Animate_Display_ISR();
+    LED1_TOG();
+
+    LED2_TOG();
     updateDisplay();
+    LED2_TOG();
 }

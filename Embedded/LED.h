@@ -26,7 +26,7 @@
 #define LED_H_INCLUDED
 
 /* Defines */
-#define     N_LED              80
+#define     N_LED              20
 
 /* Macros */
 #define RGB_2_BYTES(rr,gg,bb)   (((uint16_t)gg & 0x001F )<<10) | (((uint16_t)bb & 0x001F)<<5) | ((uint16_t)rr & 0x001F)

@@ -39,8 +39,8 @@ void InitializePorts(void)
 {
     /* Special Function I/O register initialization */
 	// See definitions.h for alignment
-	P1SEL  = BIT(RXD) | BIT(TXD) | BIT(CLK) | BIT(MOSI) | BIT(MISO);
-	P1SEL2 = BIT(RXD) | BIT(TXD) | BIT(CLK) | BIT(MOSI) | BIT(MISO);
+	P1SEL  = BIT(RXD) | BIT(TXD) | BIT(SCK) | BIT(MOSI) | BIT(MISO);
+	P1SEL2 = BIT(RXD) | BIT(TXD) | BIT(SCK) | BIT(MOSI) | BIT(MISO);
 
 	P1DIR  = BIT(CSN) | BIT(LED1) | BIT(LED2);
 
@@ -55,24 +55,22 @@ void InitializeSPI(void)
 {
     /* Initialize SPI on USCI-B */
 	// Master 4-wire synchronous mode
-	UCB0CTL0 = UCMST & UCMODE_1 & UCSYNC;
+	UCB0CTL0 = UCMST | UCMODE_1 | UCSYNC;
 	// Clock source from SMCLK
 	UCB0CTL1 = UCSSEL_2;
 	// Baud rate set at 1MHz assuming 1MHz MCU speed
 	UCB0BR0 = 0;
 	UCB0BR1 = 0;
-	// No modulation (Needed for SPI mode)
-	UCA0MCTL = 0;
 
 	// **Initialize USCI state machine**
-	UCA0CTL1 &= ~UCSWRST;
+	UCB0CTL1 &= ~UCSWRST;
 }
 
 void InitializeUART1()
 {
 	/* Initialize UART on USCI-A */
 	// Buad rate of 115200 used by the BlueSMiRF
-	UCA0CLT0  = 0;
+	UCA0CTL1  = 0;
 	UCA0CTL1  = UCSSEL_2;                  		// SMCLK
 	UCA0BR0   = 8;                              // 1MHz 115200
 	UCA0BR1   = 0;                              // 1MHz 115200

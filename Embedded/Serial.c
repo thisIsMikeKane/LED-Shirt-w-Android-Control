@@ -27,7 +27,7 @@
 #include "definitions.h"
 
 /* Global variables for UART data transfer */
-unsigned char USART_TX_FIFO[256], USART_RX_FIFO[256], USART_RX_Received, USART_RX_Length;
+unsigned char USART_TX_FIFO[64], USART_RX_FIFO[64], USART_RX_Received, USART_RX_Length;
 
 /* Private function prototypes */
 void USART_Flush(void);
@@ -90,12 +90,12 @@ void ReceiveFromSerial(void)
 //    Animate_Strobe(true, RGB_2_BYTES(15,0,15), 48);
 
 	/* Store Existing Interrupt State */
-    GIE_was_true = SR & BIT(GIE);
+    GIE_was_true = __get_SR_register() & GIE;
 	Disable_GLOBAL_INT();
 
     /* Copy incoming USART bytes to FIFO */
 
-    while((UCSR1A & (1<<RXC1)) && (USART_RX_Received < 12 || memcmp(&USART_RX_FIFO[USART_RX_Received-5]," !!! ",5)))
+    while((IFG2 & UCA0RXIFG) && (USART_RX_Received < 12 || memcmp(&USART_RX_FIFO[USART_RX_Received-5]," !!! ",5)))
     {
         USART_RX_FIFO[USART_RX_Received] = ReceiveFromUART1();
         USART_RX_Received++;

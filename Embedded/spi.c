@@ -24,11 +24,12 @@
 
 #include <string.h>
 #include  <msp430g2553.h>
+#include "definitions.h"
 
 /* Transmit cData out through SPI, and receive the SPI input data. */
 unsigned char SPI_MasterTransceive(unsigned char cData)
 {
-	UCA0TXBUF = MST_Data;                     // Send next value
-	while (!(IFG2 & UCA0TXIFG));              // USCI_A0 TX buffer ready?
+	UCB0TXBUF = cData;                     // Send next value
+	SPI_Wait();              			   // USCI_A0 TX buffer ready?
 	return UCA0RXBUF;
 }

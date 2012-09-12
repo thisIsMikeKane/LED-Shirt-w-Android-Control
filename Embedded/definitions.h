@@ -43,6 +43,12 @@
 /* LED pin bit alignments on port 2 */
 #define LED1			     0  // P1.0 - LED1
 #define LED2				 6  // P1.6 - LED2
+#define LED1_ON()			 (P1OUT |= BIT(LED1))
+#define LED1_OFF()			 (P1OUT &= ~BIT(LED1))
+#define LED1_TOG()			 (P1OUT ^= BIT(LED1))
+#define LED2_ON()			 (P1OUT |= BIT(LED2))
+#define LED2_OFF()			 (P1OUT &= ~BIT(LED2))
+#define LED2_TOG()			 (P1OUT ^= BIT(LED2))
 
 /* Type definitions */
 typedef unsigned char		BOOL;
